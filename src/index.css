@@ -1,0 +1,23 @@
+body {
+  font-family: Arial, sans-serif;
+}
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+input,
+button {
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+}
+.user {
+  text-align: left;
+  color: rgb(32, 147, 247);
+}
+.agent {
+  text-align: right;
+  color: rgb(225, 89, 25);
+}
