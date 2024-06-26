@@ -2,14 +2,14 @@ import express from "express";
 import julep from "@julep/sdk";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { fileURLToPath } from "url"; // Import the fileURLToPath function
+import { fileURLToPath } from "url";
 import path from "path";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url); // Get the current file path
-const __dirname = path.dirname(__filename); // Get the directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // eslint-disable-next-line no-undef
 const apiKey = process.env.JULEP_API_KEY; // Replace with your actual API key
@@ -17,21 +17,18 @@ const client = new julep.Client({ apiKey });
 
 const app = express();
 
-// Middleware
 app.use(bodyParser.json());
 app.use(cors());
 
-// Serve static files (index.html)
 app.use(express.static(path.join(__dirname, "public")));
 
-// API endpoint for chat
 app.post("/chat", async (req, res) => {
   try {
     const query = req.body.query;
 
     const user = await client.users.create({
-      name: "Ayush",
-      about: "A developer",
+      name: "Xiaoxu",
+      about: "前端开发工程师",
     });
 
     const agent = await client.agents.create({
@@ -43,7 +40,7 @@ app.post("/chat", async (req, res) => {
       agentId: agent.id,
       userId: user.id,
       situation:
-        "You are Movio. You tell the people about movies they ask for, and recommend movies to the users",
+        "你是一个电影伴侣。告诉人们他们想要的电影，并向用户推荐电影。",
     });
 
     const chatParams = {
@@ -57,14 +54,12 @@ app.post("/chat", async (req, res) => {
     };
     const chatResponse = await client.sessions.chat(session.id, chatParams);
     const responseMessage = chatResponse.response[0][0].content;
-
     res.json({ response: responseMessage });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// Start the server
 app.listen(3000, () => {
   console.log(`Server is running on port 3000`);
 });
